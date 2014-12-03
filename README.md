@@ -1,4 +1,4 @@
-# gulp-angularviewcache
+# gulp-viewcache
 
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://npmjs.org/package/gulp-viewcache)
 [![NPM version](http://img.shields.io/npm/v/gulp-viewcache.svg?style=flat)](https://npmjs.org/package/gulp-viewcache)
