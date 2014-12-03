@@ -10,20 +10,20 @@ var htmlJsStr = require('js-string-escape');
  * "constants"
  */
 
-var TEMPLATE_HEADER = 'angular.module("<%= module %>"<%= standalone %>).run(["$templateCache", function($templateCache) {';
-var TEMPLATE_FOOTER = '}]);';
+var TEMPLATE_HEADER = 'define(function (require) {var $templateCache = {};';
+var TEMPLATE_FOOTER = 'return {load: function(templateName){if ($templateCache[templateName] == undefined) {return templateName;}var div = document.createElement(\'div\');div.innerHTML = $templateCache[templateName];return div;}};});';
 var DEFAULT_FILENAME = 'templates.js';
 var DEFAULT_MODULE = 'templates';
 var MODULE_TEMPLATES = {
 
-  requirejs: {
-    header: 'define([\'angular\'], function(angular) { \'use strict\'; return ',
-    footer: '});'
-  },
+    // requirejs: {
+    // header: 'define([\'angular\'], function(angular) { \'use strict\'; return ',
+    // footer: '});'
+    // },
 
-  browserify: {
-    header: 'module.exports = '
-  }
+    // browserify: { // not tested
+    // header: 'module.exports = '
+    // }
 
 };
 
@@ -33,43 +33,43 @@ var MODULE_TEMPLATES = {
 
 function templateCacheFiles(root, base) {
 
-  return function templateCacheFile(file, callback) {
-    var template = '$templateCache.put("<%= url %>","<%= contents %>");';
-    var url;
+    return function templateCacheFile(file, callback) {
+        var template = '$templateCache["<%= url %>"] = "<%= contents %>";';
+        var url;
 
-    file.path = path.normalize(file.path);
+        file.path = path.normalize(file.path);
 
-    /**
-     * Rewrite url
-     */
+        /**
+         * Rewrite url
+         */
 
-    if (typeof base === 'function') {
-      url = path.join(root, base(file));
-    } else {
-      url = path.join(root, file.path.replace(base || file.base, ''));
-    }
+        if (typeof base === 'function') {
+            url = path.join(root, base(file));
+        } else {
+            url = path.join(root, file.path.replace(base || file.base, ''));
+        }
 
-    /**
-     * Normalize url (win only)
-     */
+        /**
+         * Normalize url (win only)
+         */
 
-    if (process.platform === 'win32') {
-      url = url.replace(/\\/g, '/');
-    }
+        if (process.platform === 'win32') {
+            url = url.replace(/\\/g, '/');
+        }
 
-    /**
-     * Create buffer
-     */
+        /**
+         * Create buffer
+         */
 
-    file.contents = new Buffer(gutil.template(template, {
-      url: url,
-      contents: htmlJsStr(file.contents),
-      file: file
-    }));
+        file.contents = new Buffer(gutil.template(template, {
+            url: url,
+            contents: htmlJsStr(file.contents),
+            file: file
+        }));
 
-    callback(null, file);
+        callback(null, file);
 
-  };
+    };
 
 }
 
@@ -79,27 +79,27 @@ function templateCacheFiles(root, base) {
 
 function templateCacheStream(root, base) {
 
-  /**
-   * Set relative base
-   */
+    /**
+     * Set relative base
+     */
 
-  if (typeof base !== 'function' && base && base.substr(-1) !== path.sep) {
-    base += path.sep;
-  }
+    if (typeof base !== 'function' && base && base.substr(-1) !== path.sep) {
+        base += path.sep;
+    }
 
-  /**
-   * templateCache files
-   */
+    /**
+     * templateCache files
+     */
 
-  return es.map(templateCacheFiles(root, base));
+    return es.map(templateCacheFiles(root, base));
 
 }
 
 /**
  * Wrap templateCache with module system template.
- */
+ *
 
-function wrapInModule(moduleSystem) {
+ function wrapInModule(moduleSystem) {
   var moduleTemplate = MODULE_TEMPLATES[moduleSystem];
 
   if (!moduleTemplate) {
@@ -112,6 +112,7 @@ function wrapInModule(moduleSystem) {
   );
 
 }
+ */
 
 /**
  * Concatenates and registers AngularJS templates in the $templateCache.
@@ -122,39 +123,39 @@ function wrapInModule(moduleSystem) {
 
 function templateCache(filename, options) {
 
-  /**
-   * Prepare options
-   */
+    /**
+     * Prepare options
+     */
 
-  if (typeof filename === 'string') {
-    options = options || {};
-  } else {
-    options = filename || {};
-    filename = options.filename || DEFAULT_FILENAME;
-  }
+    if (typeof filename === 'string') {
+        options = options || {};
+    } else {
+        options = filename || {};
+        filename = options.filename || DEFAULT_FILENAME;
+    }
 
-  /**
-   * Normalize moduleSystem option
-   */
+    /**
+     * Normalize moduleSystem option
+     */
 
-  if (options.moduleSystem) {
-    options.moduleSystem = options.moduleSystem.toLowerCase();
-  }
+    if (options.moduleSystem) {
+        options.moduleSystem = options.moduleSystem.toLowerCase();
+    }
 
-  /**
-   * Build templateCache
-   */
+    /**
+     * Build templateCache
+     */
 
-  return es.pipeline(
-    templateCacheStream(options.root || '', options.base),
-    concat(filename),
-    header(TEMPLATE_HEADER, {
-      module: options.module || DEFAULT_MODULE,
-      standalone: options.standalone ? ', []' : ''
-    }),
-    footer(TEMPLATE_FOOTER),
-    wrapInModule(options.moduleSystem)
-  );
+    return es.pipeline(
+        templateCacheStream(options.root || '', options.base),
+        concat(filename),
+        header(TEMPLATE_HEADER, {
+            module: options.module || DEFAULT_MODULE//,
+            // standalone: options.standalone ? ', []' : ''
+        }),
+        footer(TEMPLATE_FOOTER)//,
+        // wrapInModule(options.moduleSystem)
+    );
 
 }
 
