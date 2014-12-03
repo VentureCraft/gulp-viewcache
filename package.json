@@ -1,12 +1,12 @@
 {
-  "name": "gulp-angular-templatecache",
+  "name": "gulp-durandal-templatecache",
   "version": "1.4.1",
-  "description": "Concatenates and registers AngularJS templates in the $templateCache.",
+  "description": "Concatenates and registers durandal templates in the $templateCache.",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
   },
-  "repository": "miickel/gulp-angular-templatecache",
+  "repository": "venturecraft/gulp-durandal-templatecache",
   "engines": {
     "node": ">=0.8.0"
   },
@@ -16,16 +16,15 @@
   "keywords": [
     "gulpplugin",
     "gulp",
-    "angular",
-    "angularjs",
-    "ng",
+    "durandal",
+    "durandaljs",
     "html2js",
     "templatecache"
   ],
   "author": {
-    "name": "Mickel",
-    "email": "andersson.mickel@gmail.com",
-    "url": "http://mickel.me"
+    "name": "Chris Duell",
+    "email": "chris@venturecraft.com.au",
+    "url": "http://venturecraft.com.au"
   },
   "license": "MIT",
   "dependencies": {
