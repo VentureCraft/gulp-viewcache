@@ -10,7 +10,7 @@ var htmlJsStr = require('js-string-escape');
  * "constants"
  */
 
-var TEMPLATE_HEADER = 'define(function (require) {var $templateCache = {};';
+var TEMPLATE_HEADER = 'define(function (require) {var $templateCache = [];';
 var TEMPLATE_FOOTER = 'return {load: function(templateName){if ($templateCache[templateName] == undefined) {return templateName;}var div = document.createElement(\'div\');div.innerHTML = $templateCache[templateName];return div;}};});';
 var DEFAULT_FILENAME = 'templates.js';
 var DEFAULT_MODULE = 'templates';
