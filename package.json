@@ -1,6 +1,6 @@
 {
   "name": "gulp-viewcache",
-  "version": "1.4.1",
+  "version": "1.0.0",
   "description": "Concatenates and registers view templates in the $templateCache.",
   "main": "index.js",
   "scripts": {
