@@ -3,8 +3,8 @@ var assert = require('assert');
 var gutil = require('gulp-util');
 var templateCache = require('../index');
 
-describe('gulp-angular-templatecache', function () {
-
+describe('gulp-viewcache', function () {
+/*
 
   it('should build valid $templateCache from multiple source-files', function (cb) {
     var stream = templateCache('templates.js');
@@ -251,6 +251,6 @@ describe('gulp-angular-templatecache', function () {
     });
 
   });
-
+*/
 
 });
