@@ -1,12 +1,12 @@
 {
-  "name": "gulp-durandal-templatecache",
+  "name": "gulp-viewcache",
   "version": "1.4.1",
-  "description": "Concatenates and registers durandal templates in the $templateCache.",
+  "description": "Concatenates and registers view templates in the $templateCache.",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
   },
-  "repository": "venturecraft/gulp-durandal-templatecache",
+  "repository": "venturecraft/gulp-viewcache",
   "engines": {
     "node": ">=0.8.0"
   },
@@ -16,8 +16,6 @@
   "keywords": [
     "gulpplugin",
     "gulp",
-    "durandal",
-    "durandaljs",
     "html2js",
     "templatecache"
   ],
