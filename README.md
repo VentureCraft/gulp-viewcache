@@ -6,7 +6,7 @@
 [![Build Status](http://img.shields.io/travis/venturecraft/gulp-viewcache.svg?style=flat)](http://travis-ci.org/miickel/gulp-viewcache)
 [![Dependency Status](http://img.shields.io/gemnasium/venturecraft/gulp-viewcache.svg?style=flat)](https://gemnasium.com/venturecraft/gulp-viewcache)
 
-> Concatenates and registers AngularJS templates in the `$templateCache`.
+> Concatenates and registers view templates in the `$templateCache`.
 
 <a href="#install">Install</a> |
 <a href="#example">Example</a> |
